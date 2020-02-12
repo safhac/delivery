@@ -1,0 +1,12 @@
+{% extends 'getPackage/base.html' %}
+
+{% block title %}New delivery{% endblock %}
+{% block content %}
+<div style="text-align:center"><h2>New delivery</h2></div>
+<div style="text-align:center">
+  <form method="post" id="delivery_form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form></div>
+{% endblock %}

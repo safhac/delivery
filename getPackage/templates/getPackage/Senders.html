@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Deliver test</title>
+</head>
+<body id="app-body">
+{% if user.is_authenticated %}
+<nav class="navbar fixed-top navbar-dark bg-black" id="top-nav">
+        <a class="navbar-brand" href="{% url '' %}">
+        </a>
+        <ul class="navbar-nav mr-auto flex-row" id="top-nav-ul">
+                <li class="nav-item top-nav-item">
+                    <a>
+                        Status <br>
+                        <img src="{% static '../static/img/status.png' %}" width="30" height="20" alt="">
+                    </a>
+                </li>
+                <li class="nav-item top-nav-item" id="link-layout">
+                    <a class="{{request.path|is_active_link:'layout'}}" href="{% url request.path|relative_layout %}">
+                        Layout <br>
+                        <img src="{% static '../static/img/layout.png' %}" width="30" height="20" alt="">
+                    </a>
+                </li>
+
+{% endif %}
+</body>
+</html>

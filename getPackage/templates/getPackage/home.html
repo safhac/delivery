@@ -1,0 +1,74 @@
+{% extends 'getPackage/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+  <div style="text-align:center">Hi {{ user.username }} {{user_type}}</div>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+  
+  {% if user_type == 'sender' %}
+    <table style="text-align: center;margin: 0 auto;">
+    <thead>
+    <tr><th>delivery</th><th>courier</th></tr></thead>
+    <tbody>
+      {% for delivery in deliveries %}
+      <form id="form_{{delivery.pk}}" method="post">{% csrf_token %}
+      <tr>
+        <td> 
+          {{delivery}}
+        </td>
+        <td> 
+          {% if delivery.courier %}
+            {{delivery.courier}}
+          {% else %}
+            {% include "getPackage/couriers.html" %}
+            <button type="submit">set</button>
+          {% endif %}
+          
+        </td>
+      </tr>
+      </form>
+    {% endfor %}
+    </tbody>
+    </table>
+    <p style="text-align: center;"><a href="{% url 'add_delivery' %}">add a delivery</a></p>
+  {% else %}
+
+    <table style="text-align: center;margin: 0 auto;">
+    <thead>
+    <tr><th>delivery<th>courier</th></tr></thead>
+    <tbody>
+      {% for delivery in deliveries %}
+      <tr>
+        <td> 
+          {{delivery.date}}
+        </td>
+        <td> 
+          {{delivery.description}}
+        </td>
+        <td> 
+          {{delivery.cost}}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <br> total: {{total}}
+  {% endif %}
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+
+<script>
+  var courSelect = document.querySelectorAll('.courier-slct');
+  courSelect.forEach(function(cs) {
+    cs.addEventListener('change', changeFormAction)
+  })
+  function changeFormAction(event){
+    var form = event.target.form;
+    form.action = `{% url 'set_courier' pk=11 id=22 %}`.replace("11", form.id.split("_")[1]).replace("22", this.value)
+    console.log(form.action)
+  }
+</script>
+{% endblock %}
+

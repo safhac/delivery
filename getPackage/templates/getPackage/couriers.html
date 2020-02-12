@@ -1,0 +1,6 @@
+<select name="" class="courier-slct">
+        <option>Choose courier</option>
+        {% for courier in couriers %}
+        <option value="{{courier.pk}}">{{courier}}</option>
+        {% endfor %}
+</select>
