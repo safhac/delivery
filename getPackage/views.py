@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import Form
 from django.db.models import Sum
 from django.views.generic.edit import CreateView
@@ -9,7 +9,9 @@ from django.views.generic import TemplateView
 from app.models import *
 from app.forms import *
 
-class HomePageView(TemplateView):
+
+
+class HomePageView(LoginRequiredMixin, TemplateView):
     template_name = 'getPackage/home.html'
     def get_context_data(self, **kwargs):
         
